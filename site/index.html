@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>My Docs</title>
+        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href=".">My Docs</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#introduction">Introduction</a></li>
+            <li><a href="#step-1-installing">Step 1. Installing</a></li>
+            <li><a href="#step-2-crawling">Step 2. Crawling</a></li>
+            <li><a href="#step-2-graph-processing">Step 2. Graph Processing</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="introduction">Introduction</h1>
+<p><em>PageRank adalah suatu sistem SCORING (antara 1 – 10) yang diciptakan oleh founder Google (Larry Page) untuk memberikan penilaian seberapa tinggi score dari sebuah halaman website. Semakin tinggi score halaman website tersebut, maka artinya semakin bagus KUALITAS halaman website tersebut di mata Google.</em></p>
+<p>Secara sederhana, sistem scoring dari PageRank dihitung berdasarkan LINK POPULARITY, yaitu semakin banyak link yang mengarah ke sebuah website, maka akan semakin tinggi PR dari website tersebut.<a href="&lt;&lt;http://www.klikseo.com/apa-itu-pagerank-dan-kaitannya-dengan-seo/&gt;&gt;">disini</a></p>
+<h2 id="step-1-installing">Step 1. Installing</h2>
+<p><img alt="" src="D:\semester 8\penambangan web\gambar\pylogo.png" /></p>
+<p>Dalam tutorial ini semua proses akan dibangun menggunakan bahasa pemograman <em>Python</em>. Alasan mengapa <em>author</em> menggunakan bahasa pemograman ini karena <em>Python</em> merupakan bahasa pemograman yang populer akhir-akhir ini, selain itu <em>Python</em> menyediakan banyak <em>library</em>yang mudah digunakan dalam membangun suatu sistem. Adapun <em>library</em> yang digunakan akan dijelaskan pada setiap stepnya.</p>
+<p>Panduan instalasi python dapat teman-teman baca<a href="https://realpython.com/installing-python/">disini</a></p>
+<p>Panduan instalasi library atau package dapat teman-teman <a href="https://datatofish.com/install-package-python-using-pip/">disini</a></p>
+<h2 id="step-2-crawling">Step 2. Crawling</h2>
+<h3 id="apa-itu-web-crawler">Apa itu <em>Web Crawler</em> ?</h3>
+<p><em>Web Crawler</em> merupakan suatu program atau <em>Script</em> otomatis yang relatif simpel, menggunakan sebuah metode tertentu untuk melakukan <em>scan</em> atau <em>crawl</em> pada halaman internet untuk mendapatkan indek dari data yang dicari. Nama lain dari <em>Web Crawler</em> adalah <em>Web Spider</em>, <em>Web Robot</em>, <em>Bot</em>, <em>Crawl</em> dan <em>Automatic Indexer</em>. Umumnya <em>Web Crawler</em> dapat digunakan berkaitan dengan <em>Search Engine</em>, yakni mengumpulkan informasi mengenai apa yang ada pada halaman-halaman web publik.</p>
+<h3 id="bagaimana-cara-kerja-web-crawler">Bagaimana cara kerja <em>Web Crawler</em> ?</h3>
+<p>Ketika <em>Web Crawler</em> suatu <em>Search Engine</em> mengunjungi halaman web, <em>Web Crawler</em> akan membaca teks , <em>hyperlink</em> dan macam-macam tag konten yang digunakan dalam situs misalnya meta tag yang berisi banyak keyword. Data tersebut kemudian akan dimasukkan ke dalam database atau tempat penyimpanan.</p>
+<h3 id="apa-yang-akan-dilakukan">Apa yang akan dilakukan ?</h3>
+<h4 id="install-library-yang-digunakan">Install library yang digunakan</h4>
+<pre><code class="python">from bs4 import BeautifulSoup
+import requests
+</code></pre>
+
+<p><code>BeautifulSoup</code>digunakan untuk dapat mengakses data html dan xml, sedangkan requests digunakan untuk dapat mengakses halaman web.</p>
+<h4 id="menentukan-halaman-web-yang-akan-di-crawl">Menentukan halaman web yang akan di <em>crawl</em></h4>
+<p>Pada artikel ini halaman web yang akan di crawl datanya adalah </p>
+<p><a href="http://lintasperistiwa.com/">http://lintasperistiwa.com/</a>.</p>
+<h4 id="menentukan-informasi-apa-yang-akan-di-simpan">Menentukan informasi apa yang akan di simpan</h4>
+<p>Setelah menentukan halaman web yang akan di crawl, selanjutnya berdasarkan informasi yang ada di halaman web diatas, data artikel atau berita yang akan di simpan pada tutorial ini berupa <code>URL, judul dan isi berita</code>.</p>
+<h4 id="proses-crawling">Proses Crawling</h4>
+<pre><code>&gt;&gt; Membuat requests pada halaman web yang dituju
+</code></pre>
+
+<p><code>req = requests.get('http://lintasperistiwa.com/')</code></p>
+<pre><code>&gt;&gt; Menentukan berita yang akan diambil dari halaman web
+</code></pre>
+
+<p><img alt="" src="D:\semester 8\penambangan web\tugas grap\gambar\home.png" /></p>
+<p>Berita yang akan  diambil adalah yang terletak di panel tengah pada list berita terkini, berita ini merupakan berita yang diupload tiap hari.</p>
+<p><img alt="" src="D:\semester 8\penambangan web\gambar\inspek.png" /></p>
+<p>Untuk dapat mengakses tag html dari list berita tersebut, dapat dilakukan dengan <em>inspect element</em>, yakni dengan cara :</p>
+<ol>
+<li>
+<p>klik kanan pada halaman web</p>
+</li>
+<li>
+<p>pilih <em>inspect</em></p>
+</li>
+<li>
+<p>maka akan muncul panel <em>inspect</em> di jendela sebelah kanan</p>
+</li>
+</ol>
+<p><img alt="" src="D:\semester 8\penambangan web\gambar\inspek elemen.png" /></p>
+<p>Selanjutnya pada panel <em>inspect</em>, cari tag html yang berisi link berita terkait pada tag html yang memuat tag &lt;a </p>
+<p><img alt="" src="D:\semester 8\penambangan web\tugas grap\gambar\haref pertama.png" /></p>
+<pre><code>news_links = soup.find_all('a',{'class':'mod-judul-post'}, href=True)e)
+</code></pre>
+
+<pre><code>&gt;&gt;Mendapatkan judul dan alamat web dari isi artikel
+</code></pre>
+
+<p>Setelah tag html list berita telah diperoleh, selanjutnya adalah mencari tag html yang memuat judul dan link dari judul tersebut. Hal ini dilakukan agar menelusuri isi dari setiap list berita yang terdapat pada halaman tersebut. Biasanya tag html yang memuat link terdapat attribut <code>href</code>.</p>
+<p>Sehingga untuk melakukan crawling pada artikel tersebut, diperoleh code seperti berikut :</p>
+<pre><code>req = requests.get(url)
+soup = BeautifulSoup(req.text, 'html.parser')
+ news_linkss = soups.find_all('a',{'class':'vrp-thumb-link'}, href=True)
+</code></pre>
+
+<h4 id="looping-hingga-melakukan-crawling-pada-kedalaman-tertentu">Looping hingga melakukan <em>crawling</em> pada kedalaman tertentu</h4>
+<h4 id="full-code">Full Code</h4>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+
+def getLinks(url):
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, 'html.parser')
+    news_links = soup.find_all('a',{'class':'mod-judul-post'}, href=True)
+    for link in news_links:
+        listUrl.append(link['href'])
+    n_depth = 3
+    swap_depth = 0
+    swap_list = 0
+    while swap_depth &lt; n_depth :
+        listUrl.append(&quot;depth&quot;)
+        next_depth = False
+        while next_depth == False:
+            if listUrl[swap_list] == &quot;depth&quot; :
+                swap_list+=1
+                next_depth = True
+                break
+
+            if listUrl[swap_list].isdigit() :
+                swap_list+=1
+                break
+
+            listUrl.append(str(swap_list))
+
+            urls = listUrl[swap_list]
+            reqs = requests.get(urls)
+            soups = BeautifulSoup(reqs.text, 'html.parser')
+            news_linkss = soups.find_all('a',{'class':'vrp-thumb-link'}, href=True)
+            for link in news_linkss:
+                listUrl.append(link['href'])
+
+            swap_list+=1
+        swap_depth+=1
+
+if __name__== &quot;__main__&quot;:
+    listUrl = []
+    links = getLinks(&quot;http://lintasperistiwa.com/&quot;)
+    print(listUrl)
+
+</code></pre>
+
+<p>Hasil :</p>
+<p><img alt="" src="D:\semester 8\penambangan web\tugas grap\gambar\hasil crouling.png" /></p>
+<h2 id="step-2-graph-processing">Step 2. Graph Processing</h2>
+<h3 id="apa-itu-graph">Apa itu graph ?</h3>
+<p><strong>Graph atau Graf</strong> adalah kumpulan noktah (simpul) di dalam bidang dua dimensi yang dihubungkan dengan sekumpulan garis (sisi). <em>Graph</em> dapat digunakan untuk merepresentasikan objek-objek diskrit dan hubungan antara objek-objek tersebut. Representasi visual dari<em>graph</em>adalah dengan menyatakan objek sebagai noktah, bulatan atau titik (Vertex), sedangkan hubungan antara objek dinyatakan dengan garis (Edge).</p>
+<blockquote>
+<p>G = (V, E)</p>
+</blockquote>
+<p>Dimana :</p>
+<p>G = Graph</p>
+<p>V = Simpul atau Vertex, atau Node, atau Titik</p>
+<p>E = Busur atau Edge, atau arc</p>
+<p>V adalah himpunan verteks dan E adalah himpunan sisi yang terdefinisi antara pasangan-pasangan verteks. Sebuah sisi antara verteks x dan y ditulis {x,y}. Suatu graph H = (V1, E1) disebut subgraph dari graph G jika V1 adalah himpunan bagian dari V dan E1 himpunan bagian dari E.</p>
+<p>Cara pendefinisian lain untuk graph adalah dengan menggunakan himpunan keterhubungan langsung Vx. Pada setiap verteks x terdefinisi Vx sebagai himpunan dari verteks-verteks yang adjacent dari x. Secara formal:</p>
+<blockquote>
+<p>Vx = {y | (x,y) -&gt; E}</p>
+</blockquote>
+<h3 id="apa-manfaat-dari-graph">Apa manfaat dari graph ?</h3>
+<p>Tiap-tiap diagram memuat sekumpulan obyek (kotak, titik, dan lain-lain) beserta garis-garis yang menghubungkan obyek-obyek tersebut. Garis bisa berarah ataupun tidak berarah.</p>
+<ul>
+<li>Garis yang berarah biasanya digunakan untuk menyatakan hubungan yang mementingkan urutan antar objek-objek. Urut-urutan objek akan mempunyai arti yang lain jika arah garis diubah. Sebagai contoh adalah garis komando yang menghubungkan titik-titik struktur sebuah organisasi.</li>
+<li>Sebaliknya, garis yang tidak berarah digunakan untuk menyatakan hubungan antar objek-objek yang tidak mementingkan urutan. Sebagai contoh adalah garis untuk menyatakan jarak hubung 2 kota pada Gambar 2. Jarak dari kota A ke kota B sejauh 200 km akan sama dengan jarak dari kota B ke kota A. Apabila jarak 2 tempat tidak sama jika dibalik (misalnya karena harus melalui jalan memutar), maka garis yang digunakan haruslah garis yang berarah.</li>
+</ul>
+<h3 id="apa-yang-akan-dilakukan_1">Apa yang akan dilakukan ?</h3>
+<h4 id="install-library-yang-digunakan_1">Install library yang digunakan</h4>
+<pre><code>import matplotlib.pyplot as plt
+import networkx as nx
+</code></pre>
+
+<p><code>matplotlib</code> digunakan untuk dapat memvisualisasikan <em>graph</em>, sedangkan <code>networkx</code> digunakan untuk dapat mengakses atau membangun <em>graph</em>.</p>
+<h4 id="menentukan-node-dan-edge">Menentukan node dan edge</h4>
+<p><strong>Node</strong> merupakan kumpulan dari <em>link</em> yang telah diperoleh dari hasil crawling, sedangkan <strong>Edge</strong>merupakan hubungan antar <em>link</em> atau <em>link</em> yang saling berkaitan. Oleh karena itu, saat melakukan crawling alangkah lebih baiknya jika menginisialisasi <strong>Node</strong> dan <strong>Edge</strong> secara bersamaan.</p>
+<pre><code> urls = listUrl[swap_list]
+            reqs = requests.get(urls)
+            soups = BeautifulSoup(reqs.text, 'html.parser')
+            news_linkss = soups.find_all('a',{'class':'vrp-thumb-link'}, href=True)
+            for link in news_linkss:
+                listUrl.append(link['href'])
+
+                if link['href'] not in node :
+                    node.append(link['href'])
+                value = (str(node.index(urls)),str(node.index(link['href'])))
+                edge.append(value)
+</code></pre>
+
+<p>Saat mengunjungi sebuah artikel, <em>link</em> dari artikel tersebut akan di tambahkan ke dalam list node <code>node.append(link['href'])</code>, setelah itu <em>link</em> dari artikel <code>(str(node.index(urls))</code> dan <em>link</em>terkait <code>str(node.index(link['href']))</code> di inisialisasi dan ditambakan pada list edge</p>
+<pre><code> value = (str(node.index(urls)),str(node.index(link['href'])))
+ edge.append(value)
+</code></pre>
+
+<p>Sehingga keseluruhan code untuk proses <em>crawling</em> dan inisialisasi <strong>Node</strong> dan <strong>Edge</strong> </p>
+<p>full code :</p>
+<pre><code>import requests
+from bs4 import BeautifulSoup
+import networkx as nx
+import matplotlib.pyplot as plt
+
+def getLinks(url):
+    req = requests.get(url)
+    soup = BeautifulSoup(req.text, 'html.parser')
+    news_links = soup.find_all('a',{'class':'mod-judul-post'}, href=True)
+    for link in news_links:
+        listUrl.append(link['href'])
+        node.append(link['href'])
+
+    n_depth = 3
+    swap_depth = 0
+    swap_list = 0
+    while swap_depth &lt; n_depth :
+        listUrl.append(&quot;depth&quot;)
+        next_depth = False
+        while next_depth == False:
+            if listUrl[swap_list] == &quot;depth&quot; :
+                swap_list+=1
+                next_depth = True
+                swap_depth+=1
+                break
+            try :
+                urls = listUrl[swap_list]
+                reqs = requests.get(urls)
+                soups = BeautifulSoup(reqs.text, 'html.parser')
+                news_linkss = soups.find_all('a',{'class':'vrp-thumb-link'}, href=True)
+                for link in news_linkss:
+                    listUrl.append(link['href'])
+
+                    if link['href'] not in node :
+                        node.append(link['href'])
+                    value = (str(node.index(urls)),str(node.index(link['href'])))
+                    edge.append(value)
+
+            except :
+                pass
+            swap_list+=1
+        swap_depth+=1
+
+if __name__== &quot;__main__&quot;:
+    listUrl = []
+    node = []
+    edge = []
+
+
+    links = getLinks(&quot;http://lintasperistiwa.com/&quot;)
+    #print(listUrl)
+    G=nx.DiGraph()
+    pages = []
+    for i in range(0,len(node)):
+        pages.append(str(i))
+
+    G.add_nodes_from(pages)
+    G.add_edges_from(edge)
+
+    print(edge)
+    print(type(edge))
+    #print(type(edge[0]))
+    #membuat graf
+    image = nx.draw_circular(G,node_color='blue', with_labels = True)
+    plt.savefig(&quot;grap.png&quot;, format=&quot;PNG&quot;)
+    #mancari nilai pagerank
+    PR = nx.pagerank(G)
+    print(PR)
+    value = max(PR, key=PR.get)
+    print(&quot;node : &quot; + max(PR,key=PR.get))
+    print(&quot;link : &quot; + node[int(value)])
+    nx.draw(G)
+    plt.show()
+    print(node)
+
+
+
+
+</code></pre>
+
+<p>Hasil :</p>
+<p><img alt="" src="D:\semester 8\penambangan web\tugas grap\grap.png" /></p></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2019-05-27 02:25:06
+-->
