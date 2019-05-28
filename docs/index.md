@@ -6,7 +6,7 @@ Secara sederhana, sistem scoring dari PageRank dihitung berdasarkan LINK POPULAR
 
 ## Step 1. Installing
 
-![](D:\semester 8\penambangan web\gambar\pylogo.png)
+![1559053631506](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559053631506.png)
 
 Dalam tutorial ini semua proses akan dibangun menggunakan bahasa pemograman *Python*. Alasan mengapa *author* menggunakan bahasa pemograman ini karena *Python* merupakan bahasa pemograman yang populer akhir-akhir ini, selain itu *Python* menyediakan banyak *library*yang mudah digunakan dalam membangun suatu sistem. Adapun *library* yang digunakan akan dijelaskan pada setiap stepnya.
 
@@ -57,13 +57,13 @@ Setelah menentukan halaman web yang akan di crawl, selanjutnya berdasarkan infor
 >> Menentukan berita yang akan diambil dari halaman web
 ```
 
-![](D:\semester 8\penambangan web\tugas grap\gambar\home.png)
+![1559053721767](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559053721767.png)
 
 
 
 Berita yang akan  diambil adalah yang terletak di panel tengah pada list berita terkini, berita ini merupakan berita yang diupload tiap hari.
 
-![](D:\semester 8\penambangan web\gambar\inspek.png)
+![1559053809390](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559053809390.png)
 
 Untuk dapat mengakses tag html dari list berita tersebut, dapat dilakukan dengan *inspect element*, yakni dengan cara :
 
@@ -73,11 +73,11 @@ Untuk dapat mengakses tag html dari list berita tersebut, dapat dilakukan dengan
 
 3. maka akan muncul panel *inspect* di jendela sebelah kanan
 
-   ![](D:\semester 8\penambangan web\gambar\inspek elemen.png)
+   ![1559053848520](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559053848520.png)
 
 Selanjutnya pada panel *inspect*, cari tag html yang berisi link berita terkait pada tag html yang memuat tag <a 
 
-![](D:\semester 8\penambangan web\tugas grap\gambar\haref pertama.png)
+![1559053904235](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559053904235.png)
 
 ```
 news_links = soup.find_all('a',{'class':'mod-judul-post'}, href=True)e)
@@ -148,7 +148,7 @@ if __name__== "__main__":
 
 Hasil :
 
-![](D:\semester 8\penambangan web\tugas grap\gambar\hasil crouling.png)
+![1559053969639](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559053969639.png)
 
 ## Step 2. Graph Processing
 
@@ -302,5 +302,7 @@ if __name__== "__main__":
 
 Hasil :
 
-![](D:\semester 8\penambangan web\tugas grap\grap.png)
+![1559054085167](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559054085167.png)
+
+![1559054015527](C:\Users\i-one\AppData\Roaming\Typora\typora-user-images\1559054015527.png)
 
